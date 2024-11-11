@@ -22,6 +22,7 @@ jobs:
           pip install pytest
           pip install pytest-cov
 
-      - name: Run tests
+      - name: Run tests and save reports
         run: |
-              pytest --cov --cov-report=term-missing
+          mkdir -p reports
+          pytest -v --cov --cov-report=term-missing --cov-report=html:reports/cov_html --junitxml=reports/test_report.xml
