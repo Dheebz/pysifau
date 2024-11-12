@@ -2,21 +2,21 @@
 import re
 from dataclasses import dataclass
 
+
+GUID_2X_PATT = re.compile(r'^[0-9A-F]{32}$', re.IGNORECASE)
+GUID_3X_PATT = re.compile(r'^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$', re.IGNORECASE)
 @dataclass
 class RefIdType:
     """
     An object or element identifier
 
     Atrributes:
-        RefId:str - An object or element identifier
+        RefId (str): An object or element identifier
     """
     RefId:str
     def __post_init__(self):
         if not isinstance(self.RefId,str):
             raise ValueError("RefId must be of type str")
-        
-        GUID_2X_PATT = re.compile(r'^[0-9A-F]{32}$', re.IGNORECASE)
-        GUID_3X_PATT = re.compile(r'^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$', re.IGNORECASE)
 
         if not GUID_2X_PATT.match(self.RefId) and not GUID_3X_PATT.match(self.RefId):
             raise ValueError("RefId must be a valid GUID")
