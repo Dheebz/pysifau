@@ -4,13 +4,19 @@ from dataclasses import dataclass
 
 @dataclass
 class LocalIdType:
+    """
+    LocalIdType: A dataclass to represent a LocalIdType object
+
+    Attributes:
+        LocalId (str): A string representing a LocalIdType object
+    """
     LocalId: str
 
     def __post_init__(self):
         if isinstance(self.LocalId, str):
             self.LocalId = self.LocalId.strip()
         if self.LocalId is None:
-            self.LocalId = None
+            self.LocalId = None #FIXME: This probably isn't actually going to work. None is not assignable to a string
         if not isinstance(self.LocalId, str | None):
             raise TypeError(f"LocalId must be a string, not {type(self.LocalId)}")
     def __str__(self) -> str:
@@ -18,12 +24,6 @@ class LocalIdType:
 
     def __repr__(self) -> str:
         return f"LocalIdType(LocalId='{self.LocalId}')"
-
-    def __eq__(self, other:"LocalIdType") -> bool:
-        return self.LocalId == other.LocalId
-
-    def __ne__(self, other:"LocalIdType") -> bool:
-        return self.LocalId != other.LocalId
 
     def __lt__(self, other:"LocalIdType") -> bool:
         return self.LocalId < other.LocalId

@@ -3,8 +3,9 @@ import re
 from dataclasses import dataclass
 
 
-GUID_2X_PATT = re.compile(r'^[0-9A-F]{32}$', re.IGNORECASE)
-GUID_3X_PATT = re.compile(r'^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$', re.IGNORECASE)
+GUID_2X_PATT = re.compile(r"^[0-9A-F]{32}$",re.I)
+GUID_3X_PATT = re.compile(r"^[0-9A-F]{8}(-[0-9A-F]{4}){3}-[0-9A-F]{12}$",re.I)
+
 @dataclass
 class RefIdType:
     """
@@ -17,12 +18,9 @@ class RefIdType:
     def __post_init__(self):
         if not isinstance(self.RefId,str):
             raise ValueError("RefId must be of type str")
-
-        if not GUID_2X_PATT.match(self.RefId) and not GUID_3X_PATT.match(self.RefId):
+        if not (GUID_2X_PATT.match(self.RefId) or GUID_3X_PATT.match(self.RefId)):
             raise ValueError("RefId must be a valid GUID")
         self.RefId = self.RefId
-        return self.RefId
-
 
     def __str__(self):
         return self.RefId
