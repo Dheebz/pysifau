@@ -1,2 +1,5 @@
 .pytest_cache/*
 **/school_info.py
+.coverage
+.coverage/*
+.vscode/*
